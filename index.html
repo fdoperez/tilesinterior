@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zoomable Image</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.2/openseadragon.min.js"></script>
+    <style>
+        html, body, #viewer { margin: 0; padding: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="viewer"></div>
+    <script>
+        console.log("Initializing OpenSeadragon...");
+
+        var viewer = OpenSeadragon({
+            id: "viewer",
+            prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.2/images/",
+            tileSources: {
+                type: 'zoomifytileservice',
+                width: 9384,
+                height: 6042,
+                tilesUrl: 'https://fdoperez.github.io/zoomify/'
+            },
+            showNavigationControl: true,
+            showHomeControl: true,
+            showFullPageControl: true,
+            showZoomControl: true
+        });
+
+        viewer.addHandler('open-failed', function(event) {
+            console.error("TileSource failed to load");
+            console.error("Message:", event.message);
+        });
+
+        viewer.addHandler('open', function() {
+            console.log("Viewer opened successfully!");
+        });
+    </script>
+</body>
+</html>
